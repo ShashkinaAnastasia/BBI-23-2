@@ -1,61 +1,56 @@
 ﻿using System;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-class Country
+abstract class Survey
 {
-    public string Name { get; }
-    public Survey[] surveys { get; set; }
+    public string animal { get; }
+    public string character { get; }
+    public string thing { get; }
 
-    public Country(string name)
+    public Survey(string _animal, string _character, string _thing)
     {
-        Name = name;
+        animal = _animal;
+        character = _character;
+        thing = _thing;
     }
+
+    public abstract void printSurvey();
 }
 
-class Russia : Country
+class SurveyWithCountry : Survey
 {
-    public Russia()
-        : base("Россия")
+    public string country { get; }
+
+    public SurveyWithCountry(string _animal, string _character, string _thing, string _country)
+        : base(_animal, _character, _thing)
     {
-    }
-}
-
-class Japan : Country
-{
-    public Japan()
-        : base("Япония")
-    {
-    }
-}
-
-
-class Survey
-{
-    private string _animal;
-    private string _character;
-    private string _thing;
-    private Country _country;
-
-    public string animal { get { return _animal; } }
-    public string character { get { return _character; } }
-    public string thing { get { return _thing; } }
-
-    public Country country { get { return _country; } }
-
-    public Survey(string animal, string character, string thing, Country country)
-    {
-        _animal = animal;
-        _character = character;
-        _thing = thing;
-        _country = country;
+        country = _country;
     }
 
-    public void printSurvey()
+    public override void printSurvey() 
     {
         Console.WriteLine(
-            "Animal: {0,15} \t => char: {1,20} \t thing: {2,15}",
-            animal, character, thing);
+            "Country: {0, 6} | Animal: {1,15} | char: {2,20} | thing: {3,15}",
+            country, animal, character, thing);
+    }
+}
+
+class RussianSurvey : SurveyWithCountry
+{
+    public RussianSurvey(string _animal, string _character, string _thing)
+        : base(_animal, _character, _thing, "Russia")
+    {
+    }
+}
+
+
+class JapanSurvey : SurveyWithCountry
+{
+    public JapanSurvey(string _animal, string _character, string _thing)
+        : base(_animal, _character, _thing, "Japan")
+    {
     }
 }
 
@@ -67,25 +62,25 @@ class Program
         for (int index = 0; index < Math.Min(limit, values.Length); ++index)
         {
             Console.WriteLine(
-                "value: {0,30} \t => percent: {1,6}",
+                "value: {0,20} | percent: {1,6}%",
                 values[index].Key, ((double)values[index].Value / totalCount * 100).ToString("00.00" +
                 "" +
                 ""));
         }
     }
 
-    static void CalculatePercentsByCountry(Survey[] survery, Type countryToFilter)
+    static void CalculatePercentsByCountry(Survey[] survery)
     {
-        int animalAnswers = survery.Count(surveyItem => !string.IsNullOrEmpty(surveyItem.animal) && surveyItem.country.GetType().Equals(countryToFilter));
-        int charAnswers = survery.Count(surveyItem => !string.IsNullOrEmpty(surveyItem.character) && surveyItem.country.GetType().Equals(countryToFilter));
-        int thingAnswers = survery.Count(surveyItem => !string.IsNullOrEmpty(surveyItem.thing) && surveyItem.country.GetType().Equals(countryToFilter));
+        for (int index = 0; index < survery.Length; ++index)
+            survery[index].printSurvey();
+
+        int animalAnswers = survery.Count(surveyItem => !string.IsNullOrEmpty(surveyItem.animal));
+        int charAnswers = survery.Count(surveyItem => !string.IsNullOrEmpty(surveyItem.character));
+        int thingAnswers = survery.Count(surveyItem => !string.IsNullOrEmpty(surveyItem.thing));
 
         Dictionary<string, int> animalAnswersCount = new Dictionary<string, int>();
         for (int index = 0; index < survery.Length; ++index)
         {
-            if (!survery[index].country.GetType().Equals(countryToFilter))
-                continue;
-
             if (animalAnswersCount.ContainsKey(survery[index].animal))
                 animalAnswersCount[survery[index].animal]++;
             else
@@ -99,9 +94,6 @@ class Program
         Dictionary<string, int> charAnswersCount = new Dictionary<string, int>();
         for (int index = 0; index < survery.Length; ++index)
         {
-            if (!survery[index].country.GetType().Equals(countryToFilter))
-                continue;
-
             if (charAnswersCount.ContainsKey(survery[index].character))
                 charAnswersCount[survery[index].character]++;
             else
@@ -116,9 +108,6 @@ class Program
         Dictionary<string, int> thingAnswersCount = new Dictionary<string, int>();
         for (int index = 0; index < survery.Length; ++index)
         {
-            if (!survery[index].country.GetType().Equals(countryToFilter))
-                continue;
-
             if (thingAnswersCount.ContainsKey(survery[index].thing))
                 thingAnswersCount[survery[index].thing]++;
             else
@@ -129,29 +118,37 @@ class Program
         Array.Reverse(thingAnswersAsArray);
         printElemCountOfArray(thingAnswersAsArray, 5, thingAnswers);
     }
+
     static void Main()
     {
-        Survey[] survery = { new Survey("кошка", "застенчивость", "рис", new Japan()),
-                             new Survey("собака", "дисциплинированость", "кимоно", new Japan()),
-                             new Survey("медведь", "трудолюбие", "чай", new Russia()),
-                             new Survey("рыба", "вежливость", "сакура", new Japan()),
-                             new Survey("медведь", "вежливость", "гречка", new Russia()),
-                             new Survey("дракон", "целеустремлённость", "сакура", new Japan()),
-                             new Survey("лягушка", "скромность", "рис", new Japan())
-                            };
+        Survey[] japanSurvery = { 
+            new JapanSurvey("кошка", "застенчивость", "рис"),
+            new JapanSurvey("собака", "дисциплинированость", "кимоно"),
+            new JapanSurvey("рыба", "вежливость", "сакура"),
+            new JapanSurvey("дракон", "целеустремлённость", "сакура"),
+            new JapanSurvey("дракон", "скромность", "рис")
+        };
 
-        Console.WriteLine("Unordered:");
-
-        for (int index = 0; index < survery.Length; ++index)
-            survery[index].printSurvey();
+        Survey[] russainSurvery = {
+            new RussianSurvey("медведь", "трудолюбие", "чай"),
+            new RussianSurvey("медведь", "вежливость", "гречка")
+        };
 
         Console.WriteLine();
         Console.WriteLine("==== Japan ====");
-        CalculatePercentsByCountry(survery, new Japan().GetType());
+        CalculatePercentsByCountry(japanSurvery);
 
         Console.WriteLine();
         Console.WriteLine("==== Russia ====");
-        CalculatePercentsByCountry(survery, new Russia().GetType());
+        CalculatePercentsByCountry(russainSurvery);
+
+        Survey[] total = new Survey[japanSurvery.Length + russainSurvery.Length];
+        russainSurvery.CopyTo(total, 0);
+        japanSurvery.CopyTo(total, russainSurvery.Length);
+
+        Console.WriteLine();
+        Console.WriteLine("==== total ====");
+        CalculatePercentsByCountry(total);
     }
 }
 
