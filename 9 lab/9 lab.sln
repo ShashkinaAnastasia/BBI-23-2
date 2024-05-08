@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "9.1", "9 lab\9.1.csproj", "{DBA2CEFA-5B60-49B1-BF4E-8E794C9628A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D0327F07-B254-462E-9E06-B2010DAF3526} = {D0327F07-B254-462E-9E06-B2010DAF3526}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "9.2", "9.2\9.2.csproj", "{D7C9F38D-CC83-4968-9DC5-B34A4B7B9C9D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D0327F07-B254-462E-9E06-B2010DAF3526} = {D0327F07-B254-462E-9E06-B2010DAF3526}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "9.3", "9.3\9.3.csproj", "{065754FA-20D7-4CCC-B483-48959DC8277D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D0327F07-B254-462E-9E06-B2010DAF3526} = {D0327F07-B254-462E-9E06-B2010DAF3526}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabTaskJsonSerializerLib", "LabTaskJsonSerializerLib\LabTaskJsonSerializerLib.csproj", "{D0327F07-B254-462E-9E06-B2010DAF3526}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBA2CEFA-5B60-49B1-BF4E-8E794C9628A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA2CEFA-5B60-49B1-BF4E-8E794C9628A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA2CEFA-5B60-49B1-BF4E-8E794C9628A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA2CEFA-5B60-49B1-BF4E-8E794C9628A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7C9F38D-CC83-4968-9DC5-B34A4B7B9C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C9F38D-CC83-4968-9DC5-B34A4B7B9C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7C9F38D-CC83-4968-9DC5-B34A4B7B9C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7C9F38D-CC83-4968-9DC5-B34A4B7B9C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{065754FA-20D7-4CCC-B483-48959DC8277D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{065754FA-20D7-4CCC-B483-48959DC8277D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{065754FA-20D7-4CCC-B483-48959DC8277D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{065754FA-20D7-4CCC-B483-48959DC8277D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0327F07-B254-462E-9E06-B2010DAF3526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0327F07-B254-462E-9E06-B2010DAF3526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0327F07-B254-462E-9E06-B2010DAF3526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0327F07-B254-462E-9E06-B2010DAF3526}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4029D63B-B019-447E-8362-67308AD1541E}
+	EndGlobalSection
+EndGlobal
